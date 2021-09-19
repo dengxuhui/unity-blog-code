@@ -37,7 +37,7 @@ namespace SWS
         /// <summary>
         /// Gizmo color for lines and waypoints.
         /// <summary>
-        public Color color2 = new Color(1, 235 / 255f, 4 / 255f, 0.5f);
+        public Color color2 = new Color(0,0,0,1);
 
         /// <summary>
         /// Gizmo size for path ends.
