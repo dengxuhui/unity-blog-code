@@ -217,8 +217,6 @@ namespace UnityEngine.UI.Extensions
         {
         }
 
-        #region ILayoutElement Interface
-
         public virtual void CalculateLayoutInputHorizontal()
         {
         }
@@ -227,13 +225,77 @@ namespace UnityEngine.UI.Extensions
         {
         }
 
-        public virtual float minWidth => 0;
-
         public virtual float preferredWidth
         {
             get
             {
-                // if()
+                if (overrideSprite == null)
+                {
+                    return 0;
+                }
+
+                return overrideSprite.rect.size.x / pixelsPerUnit;
+            }
+        }
+
+        public virtual float preferredHeight
+        {
+            get
+            {
+                if (overrideSprite == null)
+                {
+                    return 0;
+                }
+
+                return overrideSprite.rect.size.y / pixelsPerUnit;
+            }
+        }
+
+        public virtual float flexibleWidth => -1.0f;
+        public virtual float flexibleHeight => -1.0f;
+        public virtual float minHeight => 0.0f;
+        public virtual float minWidth => 0;
+        public virtual int layoutPriority => 0;
+
+        #region ILayoutElement Interface
+
+        public bool IsRaycastLocationValid(Vector2 screenPoint, Camera eventCamera)
+        {
+            if (m_EventAlphaThreshold >= 1)
+            {
+                return true;
+            }
+
+            var sp = overrideSprite;
+            if (sp == null)
+            {
+                return true;
+            }
+
+            //先将屏幕坐标转换到UI内坐标【左下】
+
+            RectTransformUtility.ScreenPointToLocalPointInRectangle(rectTransform, screenPoint, eventCamera,
+                out var lp);
+            Rect rt = GetPixelAdjustedRect();
+            var pivot = rectTransform.pivot;
+            lp.x += pivot.x * rt.width;
+            lp.y += pivot.y * rt.height;
+
+            lp = new Vector2(lp.x * rt.width, lp.y * rt.height);
+            var spriteRect = sp.textureRect;
+            Vector2 normalized = new Vector2(lp.x / spriteRect.width, lp.y / spriteRect.height);
+            float x = Mathf.Lerp(spriteRect.x, spriteRect.xMax, normalized.x) / sp.texture.width;
+            float y = Mathf.Lerp(spriteRect.y, spriteRect.yMax, normalized.y) / sp.texture.height;
+            try
+            {
+                return sp.texture.GetPixelBilinear(x, y).a >= m_EventAlphaThreshold;
+            }
+            catch (UnityException e)
+            {
+                Debug.LogError(
+                    "Using clickAlphaThreshold lower than 1 on Image whose sprite texture cannot be read. " +
+                    e.Message + " Also make sure to disable sprite packing for this sprite.", this);
+                return true;
             }
         }
 
