@@ -92,7 +92,7 @@ Material:
     - _Cutoff: 0.5
     - _DetailNormalMapScale: 1
     - _DstBlend: 0
-    - _ExtrusionMultiplier: 0.4
+    - _ExtrusionMultiplier: 1
     - _Extrusion_Multiplier: 1
     - _GlossMapScale: 1
     - _Glossiness: 0.5
@@ -106,7 +106,7 @@ Material:
     - _SmoothnessTextureChannel: 0
     - _SpecularHighlights: 1
     - _SrcBlend: 1
-    - _TilingAmount: 0.2
+    - _TilingAmount: 0.4
     - _Tiling_Amount: 0.4
     - _UVSec: 0
     - _ZWrite: 1
