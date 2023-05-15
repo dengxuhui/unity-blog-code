@@ -7,7 +7,7 @@ Material:
   m_CorrespondingSourceObject: {fileID: 0}
   m_PrefabInstance: {fileID: 0}
   m_PrefabAsset: {fileID: 0}
-  m_Name: UIOutline
+  m_Name: UIOutline_step_edge
   m_Shader: {fileID: -6465566751694194690, guid: e3c5d9077a74b4aada9b8a8ae3ca6972,
     type: 3}
   m_ValidKeywords: []
@@ -79,7 +79,7 @@ Material:
     - _Metallic: 0
     - _Mode: 0
     - _OcclusionStrength: 1
-    - _Outline: 0.317
+    - _Outline: 1
     - _Parallax: 0.02
     - _SmoothnessTextureChannel: 0
     - _SpecularHighlights: 1
